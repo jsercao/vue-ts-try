@@ -2,21 +2,20 @@ import axios from "axios";
 import config from "./config";
 
 // 取消重复请求
-let pending: Array<{
+const pending: Array<{
   url: string;
   cancel: Function;
 }> = [];
 const cancelToken = axios.CancelToken;
 const removePending = (config: any) => {
-  for (let p in pending) {
-    let item: any = p;
-    let list: any = pending[p];
+  for (const index in pending) {
+    const item: any = pending[index];
     // 当前请求在数组中存在时执行函数体
-    if (list.url === config.url + "&request_type=" + config.method) {
+    if (item.url === config.url + "&request_type=" + config.method) {
       // 执行取消操作
-      list.cancel();
+      item.cancel();
       // 从数组中移除记录
-      pending.splice(item, 1);
+      pending.splice(index, 1);
     }
   }
 };
