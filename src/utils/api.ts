@@ -8,14 +8,15 @@ const pending: Array<{
 }> = [];
 const cancelToken = axios.CancelToken;
 const removePending = (config: any) => {
-  for (const index in pending) {
-    const item: any = pending[index];
+  const pendingLen = pending.length;
+  while (pendingLen--) {
+    const item: any = pending[pendingLen]
     // 当前请求在数组中存在时执行函数体
     if (item.url === config.url + "&request_type=" + config.method) {
       // 执行取消操作
       item.cancel();
       // 从数组中移除记录
-      pending.splice(index, 1);
+      pending.splice(pendingLen, 1);
     }
   }
 };
